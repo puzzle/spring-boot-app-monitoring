@@ -4,7 +4,7 @@ management:
     web:
       exposure:
         include: "*"
-      base-path: "/api"
+      base-path: "/api/actuator"
   endpoint:
     prometheus:
       enabled: true
