@@ -2,7 +2,7 @@
 #
 # S2I assemble script
 
-wget https://github.com/glowroot/glowroot/releases/download/v0.10.12/glowroot-0.10.12-dist.zip
+curl -LO https://github.com/glowroot/glowroot/releases/download/v0.10.12/glowroot-0.10.12-dist.zip
 unzip glowroot-0.10.12-dist -d ./
 echo "{\"web\":{\"bindAddress\": \"0.0.0.0\"}}" > glowroot/admin.json
 chmod -R 0777 glowroot
