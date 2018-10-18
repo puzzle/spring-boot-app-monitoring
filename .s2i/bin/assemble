@@ -3,7 +3,7 @@
 # S2I assemble script
 
 # Invoke original script
-/usr/local/s2i
+/usr/local/s2i/assemble
 
 curl -LO https://github.com/glowroot/glowroot/releases/download/v0.10.12/glowroot-0.10.12-dist.zip
 unzip glowroot-0.10.12-dist -d ./
