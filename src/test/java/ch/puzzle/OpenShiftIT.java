@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.openshift.booster;
+package ch.puzzle;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;

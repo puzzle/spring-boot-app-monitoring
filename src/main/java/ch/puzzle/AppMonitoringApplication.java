@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package io.openshift.booster.exception;
+package ch.puzzle;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-public class UnprocessableEntityException extends RuntimeException {
+@SpringBootApplication
+public class AppMonitoringApplication {
 
-    public UnprocessableEntityException(String message) {
-        super(message);
+    public static void main(String[] args) {
+        SpringApplication.run(AppMonitoringApplication.class, args);
     }
 
 }

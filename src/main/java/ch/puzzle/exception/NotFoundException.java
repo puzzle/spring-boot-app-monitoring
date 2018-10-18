@@ -14,16 +14,16 @@
  * limitations under the License.
  */
 
-package io.openshift.booster;
+package ch.puzzle.exception;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-@SpringBootApplication
-public class BoosterApplication {
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class NotFoundException extends RuntimeException {
 
-    public static void main(String[] args) {
-        SpringApplication.run(BoosterApplication.class, args);
+    public NotFoundException(String message) {
+        super(message);
     }
 
 }

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package io.openshift.booster.service;
+package ch.puzzle.service;
 
-import io.openshift.booster.exception.NotFoundException;
-import io.openshift.booster.exception.UnprocessableEntityException;
-import io.openshift.booster.exception.UnsupportedMediaTypeException;
+import ch.puzzle.exception.NotFoundException;
+import ch.puzzle.exception.UnprocessableEntityException;
+import ch.puzzle.exception.UnsupportedMediaTypeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
