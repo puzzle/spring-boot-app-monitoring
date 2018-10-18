@@ -179,7 +179,7 @@ objects:
                 key: password
                 name: my-database-secret
           - name: JAVA_OPTIONS
-            value: -Dspring.profiles.active=openshift
+            value: -javaagent:/home/jboss/glowroot/glowroot.jar -Dspring.profiles.active=openshift
           - name: KUBERNETES_NAMESPACE
             valueFrom:
               fieldRef:
@@ -241,7 +241,7 @@ objects:
       provider: puzzle
       version: "BOOSTER_VERSION"
       group: io.openshift.booster
-    name: spring-boot-app-monitoring
+    name: glowroot
   spec:
     port:
       targetPort: 4000
