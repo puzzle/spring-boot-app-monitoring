@@ -21,11 +21,11 @@
     <artifactId>booster-parent</artifactId>
     <version>23</version>
   </parent>
-  <groupId>io.openshift.booster</groupId>
-  <artifactId>spring-boot-rest-http-crud</artifactId>
-  <version>2.0.0-1-SNAPSHOT</version>
-  <name>Spring Boot - CRUD Booster</name>
-  <description>Spring Boot - CRUD Booster</description>
+  <groupId>ch.puzzle</groupId>
+  <artifactId>spring-boot-app-monitoring</artifactId>
+  <version>0.0.0-1-SNAPSHOT</version>
+  <name>Spring Boot - App Monitoring</name>
+  <description>Spring Boot - Application Monitoring Example</description>
   <properties>
     <arquillian.version>1.4.0.Final</arquillian.version>
     <awaitility.version>3.1.0</awaitility.version>
