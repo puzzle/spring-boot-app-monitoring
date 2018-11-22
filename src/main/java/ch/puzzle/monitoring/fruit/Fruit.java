@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.puzzle.service;
+package ch.puzzle.monitoring.service;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
