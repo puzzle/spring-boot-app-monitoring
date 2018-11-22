@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package ch.puzzle.monitoring;
+package ch.puzzle.monitoring.fruit;
 
-import ch.puzzle.monitoring.service.Fruit;
-import ch.puzzle.monitoring.service.FruitRepository;
+import ch.puzzle.monitoring.fruit.Fruit;
+import ch.puzzle.monitoring.fruit.FruitRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

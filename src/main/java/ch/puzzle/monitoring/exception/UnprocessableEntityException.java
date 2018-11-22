@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.puzzle.service.exception;
+package ch.puzzle.monitoring.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

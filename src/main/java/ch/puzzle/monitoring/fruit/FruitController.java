@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ch.puzzle.monitoring.service;
+package ch.puzzle.monitoring.fruit;
 
 import ch.puzzle.monitoring.exception.NotFoundException;
 import ch.puzzle.monitoring.exception.UnprocessableEntityException;
