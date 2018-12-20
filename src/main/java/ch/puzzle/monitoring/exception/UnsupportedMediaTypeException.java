@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-package ch.puzzle.service;
+package ch.puzzle.monitoring.exception;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-public interface FruitRepository extends CrudRepository<Fruit, Integer> {
+@ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+public class UnsupportedMediaTypeException extends RuntimeException {
+
+    public UnsupportedMediaTypeException(String message) {
+        super(message);
+    }
+
 }

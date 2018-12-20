@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package ch.puzzle.exception;
+package ch.puzzle.monitoring.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class NotFoundException extends RuntimeException {
+@ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+public class UnprocessableEntityException extends RuntimeException {
 
-    public NotFoundException(String message) {
+    public UnprocessableEntityException(String message) {
         super(message);
     }
 

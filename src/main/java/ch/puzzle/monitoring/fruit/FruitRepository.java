@@ -14,16 +14,9 @@
  * limitations under the License.
  */
 
-package ch.puzzle;
+package ch.puzzle.monitoring.fruit;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.repository.CrudRepository;
 
-@SpringBootApplication
-public class AppMonitoringApplication {
-
-    public static void main(String[] args) {
-        SpringApplication.run(AppMonitoringApplication.class, args);
-    }
-
+public interface FruitRepository extends CrudRepository<Fruit, Integer> {
 }

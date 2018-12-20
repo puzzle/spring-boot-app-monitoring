@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package ch.puzzle.service;
+package ch.puzzle.monitoring.fruit;
 
-import ch.puzzle.exception.NotFoundException;
-import ch.puzzle.exception.UnprocessableEntityException;
-import ch.puzzle.exception.UnsupportedMediaTypeException;
+import ch.puzzle.monitoring.exception.NotFoundException;
+import ch.puzzle.monitoring.exception.UnprocessableEntityException;
+import ch.puzzle.monitoring.exception.UnsupportedMediaTypeException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
