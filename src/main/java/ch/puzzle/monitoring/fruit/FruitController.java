@@ -19,6 +19,9 @@ package ch.puzzle.monitoring.fruit;
 import ch.puzzle.monitoring.exception.NotFoundException;
 import ch.puzzle.monitoring.exception.UnprocessableEntityException;
 import ch.puzzle.monitoring.exception.UnsupportedMediaTypeException;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,15 +44,17 @@ import java.util.stream.StreamSupport;
 public class FruitController {
 
     private final FruitRepository repository;
+    private final Counter unknownFruitCounter;
 
-    public FruitController(FruitRepository repository) {
+    @Autowired
+    public FruitController(FruitRepository repository, MeterRegistry meterRegistry) {
         this.repository = repository;
+        this.unknownFruitCounter = meterRegistry.counter("unknown.fruit.count");
     }
 
     @GetMapping("/{id}")
     public Fruit get(@PathVariable("id") Integer id) {
         verifyFruitExists(id);
-
         return repository.findById(id).orElse(null);
     }
 
@@ -57,7 +62,6 @@ public class FruitController {
     public List<Fruit> getAll() {
         Spliterator<Fruit> fruits = repository.findAll()
                 .spliterator();
-
         return StreamSupport
                 .stream(fruits, false)
                 .collect(Collectors.toList());
@@ -67,7 +71,6 @@ public class FruitController {
     @PostMapping
     public Fruit post(@RequestBody(required = false) Fruit fruit) {
         verifyCorrectPayload(fruit);
-
         return repository.save(fruit);
     }
 
@@ -76,7 +79,6 @@ public class FruitController {
     public Fruit put(@PathVariable("id") Integer id, @RequestBody(required = false) Fruit fruit) {
         verifyFruitExists(id);
         verifyCorrectPayload(fruit);
-
         fruit.setId(id);
         return repository.save(fruit);
     }
@@ -85,12 +87,12 @@ public class FruitController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("id") Integer id) {
         verifyFruitExists(id);
-
         repository.deleteById(id);
     }
 
     private void verifyFruitExists(Integer id) {
         if (!repository.existsById(id)) {
+            unknownFruitCounter.increment();
             throw new NotFoundException(String.format("Fruit with id=%d was not found", id));
         }
     }
@@ -99,11 +101,9 @@ public class FruitController {
         if (Objects.isNull(fruit)) {
             throw new UnsupportedMediaTypeException("Invalid payload!");
         }
-
         if (Objects.isNull(fruit.getName()) || fruit.getName().trim().length() == 0) {
             throw new UnprocessableEntityException("The name is required!");
         }
-
         if (!Objects.isNull(fruit.getId())) {
             throw new UnprocessableEntityException("Id was invalidly set on request.");
         }
