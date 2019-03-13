@@ -23,6 +23,7 @@ pipeline {
                 withEnv(["JAVA_HOME=${tool 'jdk8_oracle'}", "PATH+MAVEN=${tool 'maven35'}/bin:${env.JAVA_HOME}/bin"]) {
                     sh 'mvn -B -V -U -e clean verify -DskipTests'
                 }*/
+            }
         }
     }
 }
