@@ -26,14 +26,14 @@ pipeline {
                 }*/
             }
         }
-        /*stage('Build Image') {
+        stage('Build Image') {
           steps {
             script {
               openshift.withCluster() {
-                openshift.selector("bc", "sprint-boot-app-monitoring").startBuild("--from-file=target/", "--wait")
+                openshift.selector("bc", "sprint-boot-app-monitoring").startBuild("--from-file=target/*.jar", "--wait")
               }
             }
           }
-        }*/
+        }
     }
 }
