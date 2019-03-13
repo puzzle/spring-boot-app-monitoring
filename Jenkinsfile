@@ -30,7 +30,7 @@ pipeline {
           steps {
             script {
               openshift.withCluster() {
-                artifact = findFiles("target/*.jar")[0].path
+                artifact = findFiles(glob: "target/*.jar")[0].path
                 openshift.selector("bc", "sprint-boot-app-monitoring").startBuild("--from-file=target/${artifact}", "--wait")
               }
             }
