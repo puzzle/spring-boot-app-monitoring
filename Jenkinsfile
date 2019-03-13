@@ -19,7 +19,7 @@ pipeline {
         stage('Build App') {
             steps {
               sh "mvn clean package -Popenshift"
-              sh "oc version"
+              sh "oc whoami"
 /*                milestone(10)  // The first milestone step starts tracking concurrent build order
                 withEnv(["JAVA_HOME=${tool 'jdk8_oracle'}", "PATH+MAVEN=${tool 'maven35'}/bin:${env.JAVA_HOME}/bin"]) {
                     sh 'mvn -B -V -U -e clean verify -DskipTests'
@@ -30,11 +30,8 @@ pipeline {
           steps {
             script {
               openshift.withCluster() {
-                openshift.withProject() {
-                  echo "Using project: ${openshift.project()}"
-                  artifact = findFiles(glob: "target/*.jar")[0].path
-                  openshift.selector("bc/sprint-boot-app-monitoring").startBuild("--wait") // "--from-file=${artifact}",
-                }
+                artifact = findFiles(glob: "target/*.jar")[0].path
+                openshift.selector("bc/sprint-boot-app-monitoring").startBuild("--wait") // "--from-file=${artifact}",
               }
             }
           }
