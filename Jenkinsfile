@@ -16,14 +16,24 @@ pipeline {
       REPO_URL = 'https://artifactory.puzzle.ch/artifactory/ext-release-local'
     }*/
     stages {
-        stage('Build') {
+        stage('Build App') {
             steps {
               sh "mvn clean package -Popenshift"
+              sh "ls -l target"
 /*                milestone(10)  // The first milestone step starts tracking concurrent build order
                 withEnv(["JAVA_HOME=${tool 'jdk8_oracle'}", "PATH+MAVEN=${tool 'maven35'}/bin:${env.JAVA_HOME}/bin"]) {
                     sh 'mvn -B -V -U -e clean verify -DskipTests'
                 }*/
             }
         }
+        /*stage('Build Image') {
+          steps {
+            script {
+              openshift.withCluster() {
+                openshift.selector("bc", "sprint-boot-app-monitoring").startBuild("--from-file=target/", "--wait")
+              }
+            }
+          }
+        }*/
     }
 }
