@@ -31,7 +31,7 @@ pipeline {
             script {
               openshift.withCluster() {
                 artifact = findFiles(glob: "target/*.jar")[0].path
-                openshift.selector("bc/spring-boot-app-monitoring").startBuild("--wait") // "--from-file=${artifact}",
+                openshift.selector("bc/spring-boot-app-monitoring").startBuild("--from-file=${artifact}", "--wait")
               }
             }
           }
