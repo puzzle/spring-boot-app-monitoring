@@ -33,9 +33,9 @@ pipeline {
           steps {
             script {
               openshift.withCluster() {
-                artifact = findFiles(glob: "target/*.jar")[0].path
+                sh "mkdir -p input && ln -sf Dockerfile target/*.jar input/"
                 def bc = openshift.selector("bc/spring-boot-docker")
-                bc.startBuild("--from-file=${artifact}")
+                bc.startBuild("--from-dir=input")
                 bc.logs("-f")
               }
             }
