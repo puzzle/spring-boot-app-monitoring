@@ -33,7 +33,7 @@ pipeline {
           steps {
             script {
               openshift.withCluster() {
-                sh "mkdir -p input && ln -sf Dockerfile target/*.jar input/"
+                sh "mkdir -p input && ln -sf ../Dockerfile ../target/*.jar input/"
                 def bc = openshift.selector("bc/spring-boot-docker")
                 bc.startBuild("--from-dir=input")
                 bc.logs("-f")
