@@ -21,9 +21,11 @@ pipeline {
               //cache(maxCacheSize: 250, caches: [
               //  [$class: 'ArbitraryFileCache', includes: '**/*', path: '${HOME}/.m2']
               //]) {
-              withMaven(mavenSettingsConfig: 'openshift-registry') {
-                sh "openssl s_client -showcerts -connect docker-registry.default.svc:5000 </dev/null | sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p' > host.name.com.pem"
-                sh "mvn clean compile jib:build -Popenshift"
+              withCredentials([sshUserPrivateKey(credentialsId: 'spring-boot-registry-cert', keyFileVariable: 'REGISTRY_CERT')]) {
+                withMaven(mavenSettingsConfig: 'openshift-registry') {
+                  sh "keytool -import -noprompt -alias registry -storetype PKCS12 -keystore registry.ts -file ${REGISTRY_CERT} -storepass changeit"
+                  sh "mvn clean compile jib:build -Popenshift -Djavax.net.ssl.trustStore=registry.ts"
+                }
               }
               // }
 /*                milestone(10)  // The first milestone step starts tracking concurrent build order
