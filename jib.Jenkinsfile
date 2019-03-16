@@ -24,7 +24,7 @@ pipeline {
               withCredentials([sshUserPrivateKey(credentialsId: 'spring-boot-registry-cert', keyFileVariable: 'REGISTRY_CERT')]) {
                 withMaven(mavenSettingsConfig: 'openshift-registry') {
                   sh "cp /usr/lib/jvm/jre/lib/security/cacerts ."
-                  sh "keytool -import -noprompt -alias registry -storetype PKCS12 -keystore cacerts -file ${REGISTRY_CERT} -storepass changeit"
+                  sh "keytool -import -noprompt -alias registry -keystore cacerts -file ${REGISTRY_CERT} -storepass changeit"
                   sh "mvn clean compile jib:build -Popenshift -Djavax.net.ssl.trustStore=cacerts"
                 }
               }
