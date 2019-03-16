@@ -22,7 +22,7 @@ pipeline {
               //  [$class: 'ArbitraryFileCache', includes: '**/*', path: '${HOME}/.m2']
               //]) {
               withMaven(mavenSettingsConfig: 'openshift-registry') {
-                sh "mvn clean compile jib:build -Popenshift"
+                sh "mvn clean compile jib:build -Dmaven.wagon.http.ssl.insecure=true -Popenshift"
               }
               // }
 /*                milestone(10)  // The first milestone step starts tracking concurrent build order
