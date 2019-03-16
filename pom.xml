@@ -121,7 +121,7 @@
         <version>0.9.6</version>
         <configuration>
             <to>
-              <image>docker-registry.default.svc:5000/spring-boot/spring-boot-jib</image>
+              <image>https://docker-registry.default.svc:5000/spring-boot/spring-boot-jib</image>
             </to>
         </configuration>
       </plugin>
