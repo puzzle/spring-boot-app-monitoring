@@ -19,13 +19,11 @@ pipeline {
     stages {
         stage('Build App') {
             steps {
-              try {
+              when (env.KUBERNETES_PORT) {
                 withCredentials([sshUserPrivateKey(credentialsId: 'spring-boot-registry-cert', keyFileVariable: 'REGISTRY_CERT')]) {
                   sh "cp --no-preserve=all /usr/lib/jvm/jre/lib/security/cacerts ."
                   sh "keytool -import -noprompt -alias registry -keystore cacerts -file ${REGISTRY_CERT} -storepass changeit"
                 }
-              } catch (e) {
-                echo "${e}, not adding registry cert to truststore!"
               }
 
               withMaven(mavenSettingsConfig: 'openshift-registry') {
