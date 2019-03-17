@@ -33,7 +33,7 @@ pipeline {
 
               // Archive workspace file listing for debugging purposes
               sh "ls -lR >ls-lR.txt"
-              archive "ls-lR.txt"
+              archiveArtifacts "ls-lR.txt"
             }
         }
     }
