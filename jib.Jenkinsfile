@@ -19,12 +19,11 @@ pipeline {
     stages {
         stage('Build App') {
             steps {
-              //cache(maxCacheSize: 250, caches: [
-              //  [$class: 'ArbitraryFileCache', includes: '**/*', path: '${HOME}/.m2']
-              //]) {
-              withCredentials([sshUserPrivateKey(credentialsId: 'spring-boot-registry-cert', keyFileVariable: 'REGISTRY_CERT')]) {
-                sh "cp --no-preserve=all /usr/lib/jvm/jre/lib/security/cacerts ."
-                sh "keytool -import -noprompt -alias registry -keystore cacerts -file ${REGISTRY_CERT} -storepass changeit"
+              catchError {
+                withCredentials([sshUserPrivateKey(credentialsId: 'spring-boot-registry-cert', keyFileVariable: 'REGISTRY_CERT')]) {
+                  sh "cp --no-preserve=all /usr/lib/jvm/jre/lib/security/cacerts ."
+                  sh "keytool -import -noprompt -alias registry -keystore cacerts -file ${REGISTRY_CERT} -storepass changeit"
+                }
               }
 
               withMaven(mavenSettingsConfig: 'openshift-registry') {
