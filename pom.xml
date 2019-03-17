@@ -120,14 +120,14 @@
         <artifactId>jib-maven-plugin</artifactId>
         <version>1.0.2</version>
         <configuration>
-            <to>
-              <image>docker-registry.default.svc:5000/spring-boot/spring-boot-jib</image>
-            </to>
-            <container>
-              <ports>
-                <port>8080</port>
-              </ports>
-            </container>
+          <to>
+            <image>docker-registry.default.svc:5000/spring-boot/spring-boot-jib</image>
+          </to>
+          <container>
+            <ports>
+              <port>8080</port>
+            </ports>
+          </container>
         </configuration>
       </plugin>
     </plugins>
