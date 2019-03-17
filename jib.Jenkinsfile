@@ -32,7 +32,7 @@ pipeline {
         stage('Build App') {
           steps {
             sh "mvn clean compile"
-            withMaven(mavenSettingsConfig: 'openshift-registry') {
+            withMaven(maven: 'maven35', mavenSettingsConfig: 'openshift-registry') {
               sh "mvn jib:build" // -Djavax.net.ssl.trustStore=cacerts"
             }
 
