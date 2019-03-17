@@ -18,14 +18,17 @@ pipeline {
     }*/
     stages {
         stage('Build App') {
+            when {
+              not environment name: 'KUBERNETES_PORT', value: ''
+            }
             steps {
-              when (env.KUBERNETES_PORT) {
                 withCredentials([sshUserPrivateKey(credentialsId: 'spring-boot-registry-cert', keyFileVariable: 'REGISTRY_CERT')]) {
                   sh "cp --no-preserve=all /usr/lib/jvm/jre/lib/security/cacerts ."
                   sh "keytool -import -noprompt -alias registry -keystore cacerts -file ${REGISTRY_CERT} -storepass changeit"
                 }
               }
 
+              steps {
               withMaven(mavenSettingsConfig: 'openshift-registry') {
                 sh "mvn clean compile jib:build -Djavax.net.ssl.trustStore=cacerts"
               }
