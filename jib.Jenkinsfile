@@ -23,7 +23,7 @@ pipeline {
               //]) {
               withCredentials([sshUserPrivateKey(credentialsId: 'spring-boot-registry-cert', keyFileVariable: 'REGISTRY_CERT')]) {
                 withMaven(mavenSettingsConfig: 'openshift-registry') {
-                  sh "cp /usr/lib/jvm/jre/lib/security/cacerts ."
+                  sh "cp --no-preserve=all /usr/lib/jvm/jre/lib/security/cacerts ."
                   // Archive workspace file listing for debugging purposes
                   sh "ls -lR >ls-lR.txt"
                   archive "ls-lR.txt"
