@@ -14,7 +14,7 @@ pipeline {
       PATH = "${M2_HOME}/bin:$PATH"
     }
     stages {
-        stage('Init') {k
+        stage('Init') {
           when {
             not { environment name: 'KUBERNETES_PORT', value: '' }
           }
