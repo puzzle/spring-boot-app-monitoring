@@ -121,7 +121,7 @@
         <version>1.0.2</version>
         <configuration>
           <to>
-            <image>docker-registry.default.svc:5000/spring-boot/spring-boot-jib</image>
+            <image>${docker-registry}/spring-boot/spring-boot-jib</image>
           </to>
           <container>
             <ports>
