@@ -31,8 +31,9 @@ pipeline {
 
         stage('Build App') {
           steps {
+            sh "mvn clean compile"
             withMaven(mavenSettingsConfig: 'openshift-registry') {
-              sh "mvn clean compile jib:build -Djavax.net.ssl.trustStore=cacerts"
+              sh "mvn jib:build" // -Djavax.net.ssl.trustStore=cacerts"
             }
 
             // Archive workspace file listing for debugging purposes
