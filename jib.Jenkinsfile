@@ -1,5 +1,5 @@
 pipeline {
-    agent { label('maven-persistent' || 'buildnode') }
+    agent { label 'maven-persistent || buildnode') }
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 10, unit: 'MINUTES')
