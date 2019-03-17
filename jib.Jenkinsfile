@@ -3,7 +3,8 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 10, unit: 'MINUTES')
-        //timestamps()  // Timestamper Plugin
+        timestamps()  // Timestamper Plugin
+        ansiColor('xterm')  // AnsiColor Plugin
     }
     /*triggers {
         pollSCM('H/5 * * * *')
@@ -33,23 +34,7 @@ pipeline {
                 }
               }
               // }
-/*                milestone(10)  // The first milestone step starts tracking concurrent build order
-                withEnv(["JAVA_HOME=${tool 'jdk8_oracle'}", "PATH+MAVEN=${tool 'maven35'}/bin:${env.JAVA_HOME}/bin"]) {
-                    sh 'mvn -B -V -U -e clean verify -DskipTests'
-                }*/
             }
-        }
-        stage('Build Image') {
-          steps {
-            script {
-              openshift.withCluster() {
-                sh "mkdir -p input && cp Dockerfile target/*.jar input"
-                def bc = openshift.selector("bc/spring-boot-docker")
-                bc.startBuild("--from-dir=input")
-                bc.logs("-f")
-              }
-            }
-          }
         }
     }
 }
