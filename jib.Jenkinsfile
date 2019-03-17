@@ -9,15 +9,12 @@ pipeline {
     /*triggers {
         pollSCM('H/5 * * * *')
     }*/
-    /*environment {
-      M2_SETTINGS = credentials('m2_settings')
-      KNOWN_HOSTS = credentials('known_hosts')
-      ARTIFACTORY = credentials('jenkins-artifactory')
-      ARTIFACT = "${env.JOB_NAME.split('/')[0]}-hello"
-      REPO_URL = 'https://artifactory.puzzle.ch/artifactory/ext-release-local'
-    }*/
+    environment {
+      M2_HOME = tool('maven35')
+      PATH = "${M2_HOME}/bin:$PATH"
+    }
     stages {
-        stage('Init') {
+        stage('Init') {k
           when {
             not { environment name: 'KUBERNETES_PORT', value: '' }
           }
@@ -32,7 +29,7 @@ pipeline {
         stage('Build App') {
           steps {
             // sh "mvn clean compile"
-            withMaven(maven: 'maven35', mavenSettingsConfig: 'openshift-registry') {
+            withMaven(mavenSettingsConfig: 'openshift-registry') {
               sh "mvn clean compile jib:build" // -Djavax.net.ssl.trustStore=cacerts"
             }
 
