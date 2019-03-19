@@ -93,6 +93,7 @@
     </dependency>
   </dependencies>
   <build>
+    <finalName>app</finalName>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -120,8 +121,11 @@
         <artifactId>jib-maven-plugin</artifactId>
         <version>1.0.2</version>
         <configuration>
+          <from>
+            <image>registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift</image>
+          </from>
           <to>
-            <image>${docker-registry}/dtschan/spring-boot-jib</image>
+            <image>${env.TO_IMAGE}</image>
           </to>
           <container>
             <ports>
