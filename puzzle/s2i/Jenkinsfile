@@ -3,8 +3,6 @@ pipeline {
   options {
       buildDiscarder(logRotator(numToKeepStr: '5'))
       timeout(time: 10, unit: 'MINUTES')
-      timestamps()  // Timestamper Plugin
-      ansiColor('xterm')  // AnsiColor Plugin
   }
   environment {
     M2_HOME = tool('maven35')
@@ -21,12 +19,12 @@ pipeline {
       steps {
         script {
           openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
-              openshift.withProject('dtschan') {
-                artifact = findFiles(glob: "target/*.jar")[0].path
-                def bc = openshift.selector("bc/spring-boot-app-monitoring")
-                bc.startBuild("--from-file=${artifact}")
-                bc.logs("-f")
-              }
+            openshift.withProject('dtschan') {
+              artifact = findFiles(glob: "target/*.jar")[0].path
+              def bc = openshift.selector("bc/spring-boot-app-monitoring")
+              bc.startBuild("--from-file=${artifact}")
+              bc.logs("-f")
+            }
           }
         }
       }
