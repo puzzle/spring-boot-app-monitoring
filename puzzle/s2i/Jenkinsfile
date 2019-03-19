@@ -27,6 +27,7 @@ pipeline {
                 def bc = openshift.selector("bc/spring-boot-app-monitoring")
                 bc.startBuild("--from-file=${artifact}")
                 bc.logs("-f")
+              }
             }
           }
         }
