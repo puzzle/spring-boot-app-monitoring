@@ -1,35 +1,37 @@
+def startBinaryBuild(selector, artifactGlob) {
+  artifact = findFiles(glob: artifactGlob)[0].path
+  def bc = openshift.selector(artifactGlob)
+  bc.startBuild("--from-file=${artifact}")
+  bc.logs("-f")
+}
+
 pipeline {
-    agent { label 'buildnode' }
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-        timeout(time: 10, unit: 'MINUTES')
-        timestamps()  // Timestamper Plugin
-        ansiColor('xterm')  // AnsiColor Plugin
-    }
-    environment {
-      M2_HOME = tool('maven35')
-      OC_HOME = tool('oc')
-      PATH = "${M2_HOME}/bin:${OC_HOME}/bin:$PATH"
-    }
-    stages {
-        stage('Build App') {
-            steps {
-                sh "mvn clean package"
-            }
+  agent { label 'buildnode' }
+  options {
+      buildDiscarder(logRotator(numToKeepStr: '5'))
+      timeout(time: 10, unit: 'MINUTES')
+      timestamps()  // Timestamper Plugin
+      ansiColor('xterm')  // AnsiColor Plugin
+  }
+  environment {
+    M2_HOME = tool('maven35')
+    OC_HOME = tool('oc')
+    PATH = "${M2_HOME}/bin:${OC_HOME}/bin:$PATH"
+  }
+  stages {
+    stage('Build App') {
+        steps {
+            sh "mvn clean package"
         }
-        stage('Build Image') {
-          steps {
-            script {
-              openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
-                openshift.withProject('dtschan') {
-                  artifact = findFiles(glob: "target/*.jar")[0].path
-                  def bc = openshift.selector("bc/spring-boot-app-monitoring")
-                  bc.startBuild("--from-file=${artifact}")
-                  bc.logs("-f")
-                }
-              }
-            }
+    }
+    stage('Build Image') {
+      steps {
+        openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
+          openshift.withProject('dtschan') {
+            startBinaryBuild('bc/spring-boot-app-monitoring', 'target/*.jar')
           }
         }
+      }
     }
+  }
 }
