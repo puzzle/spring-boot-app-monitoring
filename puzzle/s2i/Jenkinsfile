@@ -21,8 +21,8 @@ pipeline {
       steps {
         script {
           openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
-            openshift.withProject('dtschan') {
-              openshift.withCredentials('dtschan-registry') {
+            openshift.withCredentials('dtschan-registry') {
+              openshift.withProject('dtschan') {
                 artifact = findFiles(glob: "target/*.jar")[0].path
                 def bc = openshift.selector("bc/spring-boot-app-monitoring")
                 bc.startBuild("--from-file=${artifact}")
