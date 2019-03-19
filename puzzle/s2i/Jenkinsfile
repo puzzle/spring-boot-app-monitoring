@@ -21,6 +21,7 @@ pipeline {
       steps {
         script {
           openshift.withCluster('OpenShiftPuzzleProduction') {
+                openshift.verbose()
             openshift.withCredentials('dtschan-registry') {
               openshift.withProject('dtschan') {
                 artifact = findFiles(glob: "target/*.jar")[0].path
