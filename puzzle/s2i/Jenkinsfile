@@ -19,7 +19,7 @@ pipeline {
         stage('Build Image') {
           steps {
             script {
-              openshift.withCluster() {
+              openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
                 artifact = findFiles(glob: "target/*.jar")[0].path
                 def bc = openshift.selector("bc/spring-boot-app-monitoring")
                 bc.startBuild("--from-file=${artifact}", "-F")
