@@ -6,6 +6,10 @@ pipeline {
         timestamps()  // Timestamper Plugin
         ansiColor('xterm')  // AnsiColor Plugin
     }
+    environment {
+      M2_HOME = tool('maven35')
+      PATH = "${M2_HOME}/bin:$PATH"
+    }
     stages {
         stage('Build App') {
             steps {

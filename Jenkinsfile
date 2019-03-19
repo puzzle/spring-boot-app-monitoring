@@ -1,5 +1,5 @@
 pipeline {
-    agent { label 'maven-persistent || buildnode' }
+    agent { label 'maven-persistent' }
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         timeout(time: 10, unit: 'MINUTES')
@@ -18,8 +18,8 @@ pipeline {
               openshift.withCluster() {
                 artifact = findFiles(glob: "target/*.jar")[0].path
                 def bc = openshift.selector("bc/spring-boot-app-monitoring")
-                bc.startBuild("--from-file=${artifact}")
-                bc.logs("-f")
+                bc.startBuild("--from-file=${artifact}", "-F")
+                // bc.logs("-f")
               }
             }
           }
