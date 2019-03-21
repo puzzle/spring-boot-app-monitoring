@@ -12,12 +12,17 @@ pipeline {
   stages {
     stage('Build App') {
       steps {
+        withMaven {
+          sh "mvn clean package"
+        }
+      }
+    }
+    stage('Build Image') {
+      steps {
         script {
           openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
             openshift.withProject('dtschan') {
-              withMaven {
-                sh "mvn package fabric8:build"
-              }
+              sh "mvn fabric8:build"
             }
           }
         }
