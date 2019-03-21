@@ -9,7 +9,7 @@ pipeline {
     PATH = "${M2_HOME}/bin:$PATH"
     KUBERNETES_MASTER = "https://ose3-master.puzzle.ch:8443"
     KUBERNETES_NAMESPACE = "dtschan"
-    KUBERNETES_LOGIN = credential('dtschan-registry')
+    KUBERNETES_LOGIN = credentials('dtschan-registry')
   }
   stages {
     stage('Build App') {
