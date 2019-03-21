@@ -1,8 +1,8 @@
 pipeline {
   agent { label 'buildnode' }
   options {
-      buildDiscarder(logRotator(numToKeepStr: '5'))
-      timeout(time: 10, unit: 'MINUTES')
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+    timeout(time: 10, unit: 'MINUTES')
   }
   environment {
     M2_HOME = tool('maven35')
@@ -11,18 +11,20 @@ pipeline {
   }
   stages {
     stage('Build App') {
-        steps {
-            sh "mvn clean package"
+      steps {
+        withMaven(mavenSettingsConfig: 'openshift-registry') {
+          sh "mvn clean package"
         }
+      }
     }
     stage('Build Image') {
       steps {
         script {
+          openshift.verbose()
           openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
             openshift.withProject('dtschan') {
-              artifact = findFiles(glob: "target/*.jar")[0].path
               def bc = openshift.selector("bc/spring-boot-s2i")
-              bc.startBuild("--from-file=${artifact}")
+              bc.startBuild("--from-file=target/app.jar")
               bc.logs("-f")
             }
           }
