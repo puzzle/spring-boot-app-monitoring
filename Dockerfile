@@ -1,6 +1,8 @@
 FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 
-SHELL [ "/usr/bin/scl", "enable", "rh-maven35" ]
+SHELL ["/usr/bin/scl", "enable", "rh-maven35"]
+
+WORKDIR /tmp/src
 
 COPY . /tmp/src
 
@@ -10,6 +12,7 @@ RUN if [ ! -s /tmp/src/app.jar ]; then \
 
 RUN mkdir /deployment; \
     if [ -s /tmp/src/app.jar ]; then \
+
       mvn package; \
       cp target/app.jar /deployment; \
     else \
