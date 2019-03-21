@@ -9,20 +9,15 @@ COPY . /tmp/src
 USER 0
 
 RUN if [ ! -s /tmp/src/app.jar ]; then \
-      mvn dependency:resolve; \
-    fi
-
-RUN mkdir /deployment; \
-    if [ ! -s /tmp/src/app.jar ]; then \
       mvn package; \
-      cp target/app.jar /deployment; \
+      cp target/app.jar /home/jboss; \
     else \
-      cp /tmp/src/app.jar /deployment; \
+      cp /tmp/src/app.jar /home/jboss; \
     fi; \
     rm -rf /tmp/src
 
-EXPOSE 8080
-
 USER 1001
 
-CMD java -jar /deployment/app.jar
+EXPOSE 8080
+
+CMD java -jar /home/jboss/app.jar
