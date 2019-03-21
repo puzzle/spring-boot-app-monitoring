@@ -9,6 +9,7 @@ pipeline {
     PATH = "${M2_HOME}/bin:$PATH"
     KUBERNETES_MASTER = "https://ose3-master.puzzle.ch:8443"
     KUBERNETES_NAMESPACE = "dtschan"
+    KUBERNETES_LOGIN = credential('dtschan-registry')
   }
   stages {
     stage('Build App') {
@@ -21,9 +22,7 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          withCredentials([usernamePassword(credentialsId: 'dtschan-registry', passwordVariable: 'KUBERNETES_PASSWORD', usernameVariable: 'KUBERNETES_USERNAME')]) {
-            sh "mvn fabric8:build"
-          }
+          sh "mvn fabric8:build -Dfabric8.password=${KUBERNETES_LOGIN_PSW}"
         }
       }
     }
