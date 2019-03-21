@@ -13,7 +13,7 @@ RUN if [ ! -s /tmp/src/app.jar ]; then \
     fi
 
 RUN mkdir /deployment; \
-    if [ -s /tmp/src/app.jar ]; then \
+    if [ ! -s /tmp/src/app.jar ]; then \
       mvn package; \
       cp target/app.jar /deployment; \
     else \
