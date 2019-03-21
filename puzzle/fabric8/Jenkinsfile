@@ -6,13 +6,20 @@ pipeline {
   }
   environment {
     M2_HOME = tool('maven35')
-    PATH = "${M2_HOME}/bin:$PATH"
+    OC_HOME = tool('oc')
+    PATH = "${M2_HOME}/bin:${OC_HOME}/bin:$PATH"
   }
   stages {
     stage('Build App') {
       steps {
-        withMaven(mavenSettingsConfig: 'openshift-registry') {
-          sh "mvn package fabric8:build"
+        script {
+          openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
+            openshift.withProject('dtschan') {
+              withMaven {
+                sh "mvn package fabric8:build"
+              }
+            }
+          }
         }
       }
     }
