@@ -1,5 +1,7 @@
 FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 
+SHELL [ "/usr/bin/scl", "enable", "rh-maven35" ]
+
 COPY . /tmp/src
 
 RUN if [ ! -s /tmp/src/app.jar ]; then \
