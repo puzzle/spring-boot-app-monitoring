@@ -6,6 +6,8 @@ WORKDIR /tmp/src
 
 COPY . /tmp/src
 
+USER 0
+
 RUN if [ ! -s /tmp/src/app.jar ]; then \
       mvn dependency:resolve; \
     fi
