@@ -3,16 +3,16 @@ FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 COPY . /tmp/src
 
 RUN if [ ! -s /tmp/src/app.jar ]; then \
-      mvn dependency:resolve \
+      mvn dependency:resolve; \
     fi
 
 RUN mkdir /deployment; \
     if [ -s /tmp/src/app.jar ]; then \
-      mvn package \
-      cp target/app.jar /deployment \
+      mvn package; \
+      cp target/app.jar /deployment; \
     else \
-      cp /tmp/src/app.jar /deployment \
-    fi \
+      cp /tmp/src/app.jar /deployment; \
+    fi; \
     rm -rf /tmp/src
 
 EXPOSE 8080
