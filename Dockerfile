@@ -2,15 +2,21 @@ FROM registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
 
 COPY . /tmp/src
 
-RUN [ -s /tmp/src/app.jar ] && mvn dependency:resolve
+RUN if [ ! -s /tmp/src/app.jar ]; then \
+      mvn dependency:resolve \
+    fi
 
 RUN mkdir /deployment; \
-  if [ -s /tmp/src/app.jar ]; then \
-    mvn package \
-    cp target/app.jar /deployment \
-  else \
-    cp /tmp/src/app.jar /deployment \
-  fi \
-  rm -rf /tmp/src
+    if [ -s /tmp/src/app.jar ]; then \
+      mvn package \
+      cp target/app.jar /deployment \
+    else \
+      cp /tmp/src/app.jar /deployment \
+    fi \
+    rm -rf /tmp/src
+
+EXPOSE 8080
+
+USER 1001
 
 CMD java -jar /deployment/app.jar
