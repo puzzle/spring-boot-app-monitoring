@@ -19,9 +19,7 @@ pipeline {
     }
     stage('Build Image') {
       steps {
-        script {
-          sh "mvn fabric8:build -Dfabric8.masterUrl=https://ose3-master.puzzle.ch:8443 -Dfabric8.namespace=dtschan -Dfabric8.password=${OPENSHIFT_LOGIN_PSW}"
-        }
+        sh "mvn fabric8:build -Dfabric8.masterUrl=https://ose3-master.puzzle.ch:8443 -Dfabric8.namespace=dtschan -Dfabric8.username=${OPENSHIFT_LOGIN_USR} -Dfabric8.password=${OPENSHIFT_LOGIN_PSW}"
       }
     }
   }
