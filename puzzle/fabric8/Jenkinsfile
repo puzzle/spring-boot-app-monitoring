@@ -21,7 +21,7 @@ pipeline {
     }
     stage('Build Image') {
       steps {
-        sh 'oc login ose3-master.puzzle.ch:8443' +
+        sh 'oc login ose3-master.puzzle.ch:8443 ' +
            '--namespace=dtschan --token=${OPENSHIFT_LOGIN_PSW}'
         sh 'mvn fabric8:build'
       }
