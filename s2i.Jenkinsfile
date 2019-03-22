@@ -12,7 +12,7 @@ pipeline {
   stages {
     stage('Build App') {
       steps {
-        withMaven {
+        withMaven(mavenSettingsConfig: 'openshift-registry') {
           sh "mvn clean package"
         }
       }
@@ -20,11 +20,11 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
+          openshift.verbose()
           openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
             openshift.withProject('dtschan') {
-              sh "mkdir -p input && cp Dockerfile target/*.jar input"
-              def bc = openshift.selector("bc/spring-boot-docker")
-              bc.startBuild("--from-dir=input")
+              def bc = openshift.selector("bc/spring-boot-s2i")
+              bc.startBuild("--from-file=target/app.jar")
               bc.logs("-f")
             }
           }
