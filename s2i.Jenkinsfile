@@ -20,7 +20,6 @@ pipeline {
     stage('Build Image') {
       steps {
         script {
-          openshift.verbose()
           openshift.withCluster('OpenShiftPuzzleProduction', 'dtschan-jenkins') {
             openshift.withProject('dtschan') {
               def bc = openshift.selector("bc/spring-boot-s2i")
