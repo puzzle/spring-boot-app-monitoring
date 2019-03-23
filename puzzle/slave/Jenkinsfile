@@ -10,8 +10,15 @@ pipeline {
   stages {
     stage('Build App') {
       steps {
+        withMaven {
+          sh "mvn clean test"
+        }
+      }
+    }
+    stage('Build Image') {
+      steps {
         withMaven(mavenSettingsConfig: 'openshift-registry') {
-          sh "mvn clean compile jib:build"
+          sh "mvn jib:build"
         }
       }
     }
