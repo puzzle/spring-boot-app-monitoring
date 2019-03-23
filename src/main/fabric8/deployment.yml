@@ -6,16 +6,6 @@ spec:
   template:
     spec:
       containers:
-        - env:
-            - name: DB_USERNAME
-              valueFrom:
-                 secretKeyRef:
-                   name: my-database-secret
-                   key: user
-            - name: DB_PASSWORD
-              valueFrom:
-                 secretKeyRef:
-                   name: my-database-secret
-                   key: password
-            - name: JAVA_OPTIONS
-              value: "-Dspring.profiles.active=openshift"
+      - env:
+        - name: TZ
+          value: Europe/Zurich
